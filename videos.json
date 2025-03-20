@@ -1,0 +1,64 @@
+{
+    "Mathematics": [
+        {
+            "channel": "Numberphile",
+            "title": "A 1.58-Dimensional Object - Numberphile",
+            "url": "https://www.youtube.com/watch?v=FnRhnZbDprE",
+            "publishedAt": "2025-03-07T15:20:53Z"
+        }
+    ],
+    "Python": [
+        {
+            "channel": "Real Python",
+            "title": "Eric Matthes: Maybe Don&#39;t Start With Unit Tests | Real Python Podcast #242",
+            "url": "https://www.youtube.com/watch?v=n76lTrN0o_Q",
+            "publishedAt": "2025-03-07T18:00:52Z"
+        },
+        {
+            "channel": "Real Python",
+            "title": "Working With Python Polars: Getting Started with DataFrames",
+            "url": "https://www.youtube.com/watch?v=9IrMz0wbp5Q",
+            "publishedAt": "2025-03-06T18:00:11Z"
+        },
+        {
+            "channel": "Real Python",
+            "title": "How AI Is Revolutionizing Debugging and Coding",
+            "url": "https://www.youtube.com/watch?v=8G3fGsPvGM8",
+            "publishedAt": "2025-03-05T18:00:11Z"
+        },
+        {
+            "channel": "Real Python",
+            "title": "How Writing Skills Can Make or Break Your Influence",
+            "url": "https://www.youtube.com/watch?v=5JIpF_HQEQ0",
+            "publishedAt": "2025-03-03T18:00:07Z"
+        }
+    ],
+    "Philosophy": [
+        {
+            "channel": "The Partially Examined Life",
+            "title": "Pretty Much Pop #191: Saturday Night Liver",
+            "url": "https://www.youtube.com/watch?v=VgaBjr_gLaA",
+            "publishedAt": "2025-03-07T22:33:26Z"
+        },
+        {
+            "channel": "The Partially Examined Life",
+            "title": "Nakedly Examined Music #228: John &quot;JR&quot; Robinson: Omnipresent Drummer",
+            "url": "https://www.youtube.com/watch?v=ZAt6Fza2Wqs",
+            "publishedAt": "2025-03-06T19:42:37Z"
+        },
+        {
+            "channel": "The Partially Examined Life",
+            "title": "Partially Examined Life #362: Ecclesiastes: Biblical Existentialism? (Part One)",
+            "url": "https://www.youtube.com/watch?v=8k-f9p1Qyp0",
+            "publishedAt": "2025-03-03T12:26:46Z"
+        }
+    ],
+    "Comedy": [
+        {
+            "channel": "Kill Tony",
+            "title": "KT #709 - BIG JAY OAKERSON + BILL MAHER (KYLE DUNNIGAN)",
+            "url": "https://www.youtube.com/watch?v=3tzdqyIPcrM",
+            "publishedAt": "2025-03-04T02:00:06Z"
+        }
+    ]
+}
