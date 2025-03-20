@@ -7,18 +7,12 @@ from datetime import datetime, timedelta, timezone
 import requests
 from dotenv import load_dotenv
 
-# Import our database module
-from database import DiceDB
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-# Initialize database
-db = DiceDB()
 
 # Load API key from environment
 load_dotenv()
@@ -39,13 +33,6 @@ def get_channel_id(channel_name: str) -> Optional[str]:
     Returns:
         Channel ID string or None if not found
     """
-    # Check if we have this channel ID cached in our database
-    cache_key = f"channel_id_{channel_name}"
-    cached_id = db.get(cache_key)
-    if cached_id:
-        logger.info(f"Found cached channel ID for '{channel_name}'")
-        return cached_id
-    
     params = {
         'part': 'snippet',
         'q': channel_name,
@@ -65,12 +52,7 @@ def get_channel_id(channel_name: str) -> Optional[str]:
             logger.warning(f"No channel found for '{channel_name}'")
             return None
             
-        channel_id = items[0]['id']['channelId']
-        
-        # Store in database for future requests
-        db.set(cache_key, channel_id)
-        
-        return channel_id
+        return items[0]['id']['channelId']
         
     except requests.exceptions.HTTPError as e:
         logger.error(f"HTTP error fetching channel ID for '{channel_name}': {e}")
@@ -93,24 +75,6 @@ def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_res
     Returns:
         List of video data dictionaries
     """
-    # Check if we have cached results we can use
-    cache_key = f"videos_{channel_id}_{published_after}_{max_results}"
-    cached_videos = db.get(cache_key)
-    
-    # Only use cache if it's less than 1 hour old
-    cache_time_key = f"{cache_key}_timestamp"
-    cache_timestamp = db.get(cache_time_key)
-    
-    current_time = datetime.now().timestamp()
-    cache_valid = False
-    
-    if cached_videos and cache_timestamp:
-        # Check if cache is less than 1 hour (3600 seconds) old
-        if current_time - cache_timestamp < 3600:
-            logger.info(f"Using cached videos for channel ID '{channel_id}'")
-            cache_valid = True
-            return cached_videos
-    
     params = {
         'part': 'snippet',
         'channelId': channel_id,
@@ -129,18 +93,12 @@ def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_res
         
         data = response.json()
         
-        videos = [{
+        return [{
             "channel": item['snippet']['channelTitle'],
             "title": item['snippet']['title'],
             "url": f"https://www.youtube.com/watch?v={item['id']['videoId']}",
             "publishedAt": item['snippet']['publishedAt']
         } for item in data.get('items', [])]
-        
-        # Cache the results
-        db.set(cache_key, videos)
-        db.set(cache_time_key, current_time)
-        
-        return videos
         
     except requests.exceptions.HTTPError as e:
         logger.error(f"HTTP error fetching videos for channel ID '{channel_id}': {e}")
@@ -148,11 +106,6 @@ def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_res
         logger.error(f"Request error fetching videos for channel ID '{channel_id}': {e}")
     except (KeyError, IndexError) as e:
         logger.error(f"Data parsing error for channel ID '{channel_id}': {e}")
-        
-    # If we had cached videos but they're just outdated, use them anyway
-    if cached_videos:
-        logger.warning(f"Using outdated cached videos for channel ID '{channel_id}'")
-        return cached_videos
         
     return []
 
@@ -162,30 +115,30 @@ def main() -> None:
     # Define channels by category (channel names as identifiers)
     channels: Dict[str, List[str]] = {
         "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
-        "Python": ["realpython", "daveebbelaar"],
+        "Programming": ["realpython", "ThePrimeTimeagen", "MachineLearningStreetTalk"],
         "Philosophy": ["ThePartiallyExaminedLife"],
-        "Comedy": ["KillTony"]
+        "Comedy": ["DailyDoseOfInternet","standupots"]
     }
 
     # Configurable parameters
-    days_back = 7  # Number of days back to search for videos
-    strict_date_filter = True  # If True, only include videos within date range
-    fallback_limit = None  # If not None, fallback to videos within this many days (e.g., 30)
+    days_back = 7  
+    strict_date_filter = True  
+    fallback_limit = None  
 
     # Calculate date filter
     published_after = (datetime.now(timezone.utc) - 
                       timedelta(days=days_back)).strftime("%Y-%m-%dT%H:%M:%SZ")
     
-    # Calculate fallback date if specified
+    # Calculate fallback date 
     fallback_date = None
     if fallback_limit is not None:
         fallback_date = (datetime.now(timezone.utc) - 
                         timedelta(days=fallback_limit)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    # Initialize result dictionary
+    
     result: Dict[str, List[Dict[str, str]]] = {}
 
-    # Process each category and channel
+   
     for category, channel_names in channels.items():
         videos_list = []
         for channel_name in channel_names:
@@ -209,21 +162,17 @@ def main() -> None:
                     
             videos_list.extend(videos)
             
-        # Sort videos by publication date (newest first)
+        # Sort by publication date (newest first)
         videos_list.sort(key=lambda x: x['publishedAt'], reverse=True)
         result[category] = videos_list
 
-    # Save results to the database using bytecode encoding
+    # Save to JSON file
     try:
-        db.set('videos', result)
-        logger.info("Videos saved to database")
-        
-        # Also save to JSON file for backward compatibility
         with open('videos.json', 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=4)
-        logger.info("Videos also saved to 'videos.json'")
-    except Exception as e:
-        logger.error(f"Error saving videos: {e}")
+        logger.info("Videos saved to 'videos.json'")
+    except IOError as e:
+        logger.error(f"Error saving to videos.json: {e}")
 
 
 if __name__ == "__main__":
