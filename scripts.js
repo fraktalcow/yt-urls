@@ -61,21 +61,64 @@ function renderDashboard(data) {
     container.innerHTML = categoriesHtml;
 }
 
-fetch('videos.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => renderDashboard(data))
-    .catch(error => {
-        console.error('Error loading the data:', error);
-        document.getElementById('categories-container').innerHTML = `
-            <div class="error-message">
-                <h2>Error Loading Content</h2>
-                <p>There was an error loading the content.</p>
-                <code>${error.message}</code>
-            </div>
-        `;
-    });
+// Determine which API endpoint to use
+const isUsingFastAPI = window.location.port === '8000';
+const apiUrl = isUsingFastAPI ? '/videos.json' : 'videos.json';
+
+// Add a refresh button if we're using FastAPI
+if (isUsingFastAPI) {
+    const header = document.querySelector('header');
+    if (header) {
+        const refreshButton = document.createElement('button');
+        refreshButton.className = 'refresh-button';
+        refreshButton.textContent = 'Refresh Videos';
+        refreshButton.onclick = function() {
+            this.disabled = true;
+            this.textContent = 'Refreshing...';
+            
+            fetch('/api/refresh')
+                .then(response => response.json())
+                .then(data => {
+                    this.textContent = `Refreshed (${data.count} videos)`;
+                    // Reload the data
+                    loadVideos();
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        this.textContent = 'Refresh Videos';
+                        this.disabled = false;
+                    }, 3000);
+                })
+                .catch(error => {
+                    this.textContent = 'Refresh Failed';
+                    this.disabled = false;
+                    console.error('Error refreshing videos:', error);
+                });
+        };
+        header.appendChild(refreshButton);
+    }
+}
+
+function loadVideos() {
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => renderDashboard(data))
+        .catch(error => {
+            console.error('Error loading the data:', error);
+            document.getElementById('categories-container').innerHTML = `
+                <div class="error-message">
+                    <h2>Error Loading Content</h2>
+                    <p>There was an error loading the content.</p>
+                    <code>${error.message}</code>
+                    <button onclick="loadVideos()">Retry</button>
+                </div>
+            `;
+        });
+}
+
+// Initial load
+loadVideos();

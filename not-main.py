@@ -3,14 +3,9 @@ import json
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta, timezone
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, HTMLResponse
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+
 import requests
 from dotenv import load_dotenv
-import uvicorn
 
 # Configure logging
 logging.basicConfig(
@@ -28,29 +23,16 @@ if not API_KEY:
 
 BASE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
 
-# Create FastAPI app
-app = FastAPI(title="YouTube Video Dashboard API")
-
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # For production, specify exact origins
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Channel categories
-channels: Dict[str, List[str]] = {
-    "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
-    "Programming": ["realpython", "ThePrimeTimeagen", "MachineLearningStreetTalk"],
-    "Philosophy": ["ThePartiallyExaminedLife"],
-    "Comedy": ["xQcOW", "standupots"]
-}
-
 
 def get_channel_id(channel_name: str) -> Optional[str]:
-    """Fetch the channel ID for a given channel name."""
+    """Fetch the channel ID for a given channel name.
+    
+    Args:
+        channel_name: The name of the YouTube channel
+        
+    Returns:
+        Channel ID string or None if not found
+    """
     params = {
         'part': 'snippet',
         'q': channel_name,
@@ -83,7 +65,16 @@ def get_channel_id(channel_name: str) -> Optional[str]:
 
 
 def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_results: int = 5) -> List[Dict[str, str]]:
-    """Fetch videos from a channel ID, optionally filtered by published_after."""
+    """Fetch videos from a channel ID, optionally filtered by published_after.
+    
+    Args:
+        channel_id: The YouTube channel ID
+        published_after: ISO format date string to filter videos published after this date
+        max_results: Maximum number of results to return
+        
+    Returns:
+        List of video data dictionaries
+    """
     params = {
         'part': 'snippet',
         'channelId': channel_id,
@@ -119,8 +110,21 @@ def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_res
     return []
 
 
-def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallback_limit: Optional[int] = None) -> Dict[str, List[Dict[str, str]]]:
-    """Fetch all videos grouped by category."""
+def main() -> None:
+    """Main function to fetch and organize YouTube videos by category."""
+    # Define channels by category (channel names as identifiers)
+    channels: Dict[str, List[str]] = {
+        "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
+        "Programming": ["realpython", "ThePrimeTimeagen", "MachineLearningStreetTalk"],
+        "Philosophy": ["ThePartiallyExaminedLife"],
+        "Comedy": ["DailyDoseOfInternet","standupots"]
+    }
+
+    # Configurable parameters
+    days_back = 7  
+    strict_date_filter = True  
+    fallback_limit = None  
+
     # Calculate date filter
     published_after = (datetime.now(timezone.utc) - 
                       timedelta(days=days_back)).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -131,8 +135,10 @@ def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallba
         fallback_date = (datetime.now(timezone.utc) - 
                         timedelta(days=fallback_limit)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+    
     result: Dict[str, List[Dict[str, str]]] = {}
 
+   
     for category, channel_names in channels.items():
         videos_list = []
         for channel_name in channel_names:
@@ -159,74 +165,15 @@ def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallba
         # Sort by publication date (newest first)
         videos_list.sort(key=lambda x: x['publishedAt'], reverse=True)
         result[category] = videos_list
-    
-    return result
 
-
-@app.get("/api", response_class=JSONResponse)
-def api_info():
-    return {"message": "YouTube Video Dashboard API", "endpoints": ["/api/videos", "/api/refresh"]}
-
-
-@app.get("/api/videos", response_class=JSONResponse)
-def get_videos(days_back: int = 7, strict_filter: bool = True, fallback_days: Optional[int] = None):
-    """API endpoint to get videos organized by category."""
+    # Save to JSON file
     try:
-        result = fetch_all_videos(days_back, strict_filter, fallback_days)
-        return result
-    except Exception as e:
-        logger.error(f"Error fetching videos: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/api/refresh", response_class=JSONResponse)
-def refresh_videos(days_back: int = 7, strict_filter: bool = True, fallback_days: Optional[int] = None):
-    """API endpoint to refresh and save videos to videos.json."""
-    try:
-        result = fetch_all_videos(days_back, strict_filter, fallback_days)
-        
-        # Save to JSON file for backward compatibility
         with open('videos.json', 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=4)
-        
-        return {"message": "Videos refreshed and saved to videos.json", "count": sum(len(videos) for videos in result.values())}
-    except Exception as e:
-        logger.error(f"Error refreshing videos: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# Serve the videos.json through API for compatibility
-@app.get("/videos.json", response_class=JSONResponse)
-def get_videos_json():
-    try:
-        # Try to read the existing file first
-        try:
-            with open('videos.json', 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            # If file doesn't exist or is invalid, generate fresh data
-            result = fetch_all_videos()
-            with open('videos.json', 'w', encoding='utf-8') as f:
-                json.dump(result, f, indent=4)
-            return result
-    except Exception as e:
-        logger.error(f"Error serving videos.json: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# Mount static files AFTER defining API routes
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
+        logger.info("Videos saved to 'videos.json'")
+    except IOError as e:
+        logger.error(f"Error saving to videos.json: {e}")
 
 
 if __name__ == "__main__":
-    # Ensure videos.json exists when starting the server
-    if not os.path.exists('videos.json'):
-        try:
-            result = fetch_all_videos()
-            with open('videos.json', 'w', encoding='utf-8') as f:
-                json.dump(result, f, indent=4)
-            logger.info("Created initial videos.json file")
-        except Exception as e:
-            logger.warning(f"Could not create initial videos.json: {e}")
-    
-    uvicorn.run("main_two:app", host="0.0.0.0", port=8000, reload=True) 
+    main()

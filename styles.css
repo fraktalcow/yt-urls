@@ -7,6 +7,8 @@
     --link-color: #99ccff;
     --time-color: #ffb3b3;
     --category-title-color: #ffff99;
+    --button-bg: #1e4276;
+    --button-hover-bg: #2a5ca8;
 }
 
 * {
@@ -32,6 +34,9 @@ header {
     padding: 1rem 0;
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 h1 {
@@ -103,4 +108,53 @@ h1 {
 .video-channel {
     color: var(--secondary-text);
     font-size: 0.9rem;
+}
+
+/* Refresh button styles */
+.refresh-button {
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.refresh-button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.refresh-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.error-message {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+.error-message h2 {
+    color: #ff6666;
+    margin-bottom: 0.5rem;
+}
+
+.error-message button {
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.error-message button:hover {
+    background-color: var(--button-hover-bg);
 }
