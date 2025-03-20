@@ -7,23 +7,17 @@ A web-based dashboard that automatically fetches and categorizes recent YouTube 
 ## Features
 
 - Fetches recent videos from categorized YouTube channels
-- Organizes videos by topic categories
-- Displays video information in a clean, modern UI
-- Configurable date range filter for video freshness
+- Configurable date range filter 
 - Fallback options for channels with no recent uploads
 - FastAPI server for dynamic data fetching and serving
 
 ## How It Works
 
-### Traditional Mode
-1. The Python script (`main.py`) uses the YouTube Data API to fetch videos
-2. Videos are organized by categories and saved to `videos.json`
-3. Open `index.html` in your browser to view the static dashboard
-
-### FastAPI Mode (Recommended)
-1. The FastAPI server (`main.py`) handles both API requests and serves the UI
-2. Videos are fetched on demand or refreshed via the UI
-3. Access the dashboard by visiting `http://localhost:8000` in your browser
+The FastAPI server (`main.py`) handles both API requests and serves the UI:
+1. Videos are fetched from YouTube using the YouTube Data API
+2. Content is organized by categories and available through API endpoints
+3. The same server also serves the static files (HTML, CSS, JS)
+4. Access the dashboard by visiting `http://localhost:8000` in your browser
 
 ## Setup
 
@@ -46,28 +40,20 @@ A web-based dashboard that automatically fetches and categorizes recent YouTube 
 
 ## Usage
 
-### Traditional Mode
-1. Run the Python script to fetch the latest videos:
-   ```
-   python main.py
-   ```
-2. Open `index.html` in your browser to view the dashboard
+Start the FastAPI server:
+```
+python main.py
+```
 
-### FastAPI Mode
-1. Start the FastAPI server:
-   ```
-   python main_two.py
-   ```
-2. Open `http://localhost:8000` in your browser
-3. Use the refresh button to fetch new videos
+Then open `http://localhost:8000` in your browser. Use the refresh button in the UI to fetch new videos.
 
 ## API Endpoints
 
-When running in FastAPI mode, the following API endpoints are available:
+The following API endpoints are available:
 
 - `GET /api/videos` - Get all videos organized by category
 - `GET /api/refresh` - Refresh videos and save to videos.json
-- `GET /videos.json` - Serve the videos.json file (for backward compatibility)
+- `GET /videos.json` - Serve the videos.json file (for compatibility)
 
 Query parameters for `/api/videos` and `/api/refresh`:
 - `days_back` - Number of days to look back for videos (default: 7)
@@ -76,7 +62,7 @@ Query parameters for `/api/videos` and `/api/refresh`:
 
 ## Configuration
 
-Edit the `channels` dictionary in `main.py` or `main_two.py` to customize your video sources:
+Edit the `channels` dictionary in `main.py` to customize your video sources:
 
 ```python
 channels = {

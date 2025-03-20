@@ -229,4 +229,4 @@ if __name__ == "__main__":
         except Exception as e:
             logger.warning(f"Could not create initial videos.json: {e}")
     
-    uvicorn.run("main_two:app", host="0.0.0.0", port=8000, reload=True) 
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True) 
