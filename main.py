@@ -3,14 +3,15 @@ import json
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta, timezone
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi import FastAPI, HTTPException, Request, Form
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import requests
 from dotenv import load_dotenv
 import uvicorn
+from user_preferences import UserPreferenceManager
 
 # Configure logging
 logging.basicConfig(
@@ -40,17 +41,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Channel categories
-channels: Dict[str, List[str]] = {
-    "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
-    "Programming": ["realpython", "ThePrimeTimeagen", "MachineLearningStreetTalk"],
-    "Philosophy": ["ThePartiallyExaminedLife"],
-    "Comedy": ["xQcOW", "standupots"]
-}
+# Initialize user preferences manager
+pref_manager = UserPreferenceManager.initialize_with_defaults()
 
+# Get channels from user preferences
+def get_channels() -> Dict[str, List[str]]:
+    return pref_manager.get_channels()
+
+# Cache for channel IDs to reduce API calls
+channel_id_cache = {}
 
 def get_channel_id(channel_name: str) -> Optional[str]:
     """Fetch the channel ID for a given channel name."""
+    # Return from cache if available
+    if channel_name in channel_id_cache:
+        return channel_id_cache[channel_name]
+    
     params = {
         'part': 'snippet',
         'q': channel_name,
@@ -69,8 +75,11 @@ def get_channel_id(channel_name: str) -> Optional[str]:
         if not items:
             logger.warning(f"No channel found for '{channel_name}'")
             return None
-            
-        return items[0]['id']['channelId']
+        
+        channel_id = items[0]['id']['channelId']
+        # Store in cache
+        channel_id_cache[channel_name] = channel_id
+        return channel_id
         
     except requests.exceptions.HTTPError as e:
         logger.error(f"HTTP error fetching channel ID for '{channel_name}': {e}")
@@ -131,6 +140,10 @@ def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallba
         fallback_date = (datetime.now(timezone.utc) - 
                         timedelta(days=fallback_limit)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+    # Reload user preferences in case they've changed
+    global channels
+    channels = get_channels()
+    
     result: Dict[str, List[Dict[str, str]]] = {}
 
     for category, channel_names in channels.items():
@@ -162,6 +175,22 @@ def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallba
     
     return result
 
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    try:
+        with open("index.html", "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="index.html not found")
+
+@app.get("/styles.css")
+async def get_styles():
+    return FileResponse("styles.css", media_type="text/css")
+
+@app.get("/scripts.js")
+async def get_scripts():
+    return FileResponse("scripts.js", media_type="application/javascript")
 
 @app.get("/api", response_class=JSONResponse)
 def api_info():
@@ -214,8 +243,42 @@ def get_videos_json():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.post("/api/categories/{category_name}")
+async def add_category(category_name: str):
+    try:
+        success = pref_manager.add_category(category_name)
+        if not success:
+            raise HTTPException(status_code=400, detail="Category already exists")
+        return {"message": f"Category {category_name} added successfully"}
+    except Exception as e:
+        logger.error(f"Error adding category: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/channels")
+async def add_channel(channel_name: str = Form(...), category_name: str = Form(...)):
+    try:
+        success = pref_manager.add_channel(channel_name, category_name)
+        if not success:
+            raise HTTPException(status_code=400, detail="Channel already exists")
+        return {"message": f"Channel {channel_name} added to {category_name} successfully"}
+    except Exception as e:
+        logger.error(f"Error adding channel: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/api/channels/{channel_name}")
+async def remove_channel(channel_name: str):
+    try:
+        success = pref_manager.remove_channel(channel_name)
+        if not success:
+            raise HTTPException(status_code=404, detail="Channel not found")
+        return {"message": f"Channel {channel_name} removed successfully"}
+    except Exception as e:
+        logger.error(f"Error removing channel: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Mount static files AFTER defining API routes
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+app.mount("/static", StaticFiles(directory="."), name="static")
 
 
 if __name__ == "__main__":
@@ -229,4 +292,4 @@ if __name__ == "__main__":
         except Exception as e:
             logger.warning(f"Could not create initial videos.json: {e}")
     
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True) 
+    uvicorn.run("main:app", host="", port=8000, reload=True) 
