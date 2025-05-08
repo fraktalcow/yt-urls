@@ -3,11 +3,10 @@ import json
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta, timezone
-from fastapi import FastAPI, HTTPException, Request, Form
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 import requests
 from dotenv import load_dotenv
 import uvicorn
@@ -35,7 +34,7 @@ app = FastAPI(title="YouTube Video Dashboard API")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For production, specify exact origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,7 +43,6 @@ app.add_middleware(
 # Initialize user preferences manager
 pref_manager = UserPreferenceManager.initialize_with_defaults()
 
-# Get channels from user preferences
 def get_channels() -> Dict[str, List[str]]:
     return pref_manager.get_channels()
 
@@ -53,10 +51,9 @@ channel_id_cache = {}
 
 def get_channel_id(channel_name: str) -> Optional[str]:
     """Fetch the channel ID for a given channel name."""
-    # Return from cache if available
     if channel_name in channel_id_cache:
         return channel_id_cache[channel_name]
-    
+
     params = {
         'part': 'snippet',
         'q': channel_name,
@@ -64,32 +61,30 @@ def get_channel_id(channel_name: str) -> Optional[str]:
         'maxResults': 1,
         'key': API_KEY
     }
-    
+
     try:
         response = requests.get(BASE_SEARCH_URL, params=params, timeout=10)
         response.raise_for_status()
-        
+
         data = response.json()
         items = data.get('items', [])
-        
+
         if not items:
             logger.warning(f"No channel found for '{channel_name}'")
             return None
-        
+
         channel_id = items[0]['id']['channelId']
-        # Store in cache
         channel_id_cache[channel_name] = channel_id
         return channel_id
-        
+
     except requests.exceptions.HTTPError as e:
         logger.error(f"HTTP error fetching channel ID for '{channel_name}': {e}")
     except requests.exceptions.RequestException as e:
         logger.error(f"Request error fetching channel ID for '{channel_name}': {e}")
     except (KeyError, IndexError) as e:
         logger.error(f"Data parsing error for '{channel_name}': {e}")
-        
-    return None
 
+    return None
 
 def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_results: int = 5) -> List[Dict[str, str]]:
     """Fetch videos from a channel ID, optionally filtered by published_after."""
@@ -101,64 +96,54 @@ def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_res
         'type': 'video',
         'key': API_KEY
     }
-    
+
     if published_after:
         params['publishedAfter'] = published_after
-    
+
     try:
         response = requests.get(BASE_SEARCH_URL, params=params, timeout=10)
         response.raise_for_status()
-        
+
         data = response.json()
-        
+
         return [{
             "channel": item['snippet']['channelTitle'],
             "title": item['snippet']['title'],
             "url": f"https://www.youtube.com/watch?v={item['id']['videoId']}",
             "publishedAt": item['snippet']['publishedAt']
         } for item in data.get('items', [])]
-        
+
     except requests.exceptions.HTTPError as e:
         logger.error(f"HTTP error fetching videos for channel ID '{channel_id}': {e}")
     except requests.exceptions.RequestException as e:
         logger.error(f"Request error fetching videos for channel ID '{channel_id}': {e}")
     except (KeyError, IndexError) as e:
         logger.error(f"Data parsing error for channel ID '{channel_id}': {e}")
-        
-    return []
 
+    return []
 
 def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallback_limit: Optional[int] = None) -> Dict[str, List[Dict[str, str]]]:
     """Fetch all videos grouped by category."""
-    # Calculate date filter
-    published_after = (datetime.now(timezone.utc) - 
-                      timedelta(days=days_back)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    
-    # Calculate fallback date 
+    published_after = (datetime.now(timezone.utc) - timedelta(days=days_back)).strftime("%Y-%m-%dT%H:%M:%SZ")
     fallback_date = None
     if fallback_limit is not None:
-        fallback_date = (datetime.now(timezone.utc) - 
-                        timedelta(days=fallback_limit)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        fallback_date = (datetime.now(timezone.utc) - timedelta(days=fallback_limit)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    # Reload user preferences in case they've changed
-    global channels
     channels = get_channels()
-    
     result: Dict[str, List[Dict[str, str]]] = {}
 
     for category, channel_names in channels.items():
         videos_list = []
         for channel_name in channel_names:
             logger.info(f"Processing channel: {channel_name}")
-            
+
             channel_id = get_channel_id(channel_name)
             if not channel_id:
                 logger.warning(f"Skipping channel '{channel_name}' due to error")
                 continue
-                
-            # Fetch videos from the last 'days_back' days
+
             videos = fetch_videos(channel_id, published_after, max_results=5)
-            
+
             if not videos and not strict_date_filter:
                 if fallback_date:
                     logger.info(f"No videos in last {days_back} days for '{channel_name}'. Trying extended range of {fallback_limit} days.")
@@ -166,15 +151,13 @@ def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallba
                 else:
                     logger.info(f"No videos in last {days_back} days for '{channel_name}'. Fetching latest video regardless of date.")
                     videos = fetch_videos(channel_id, max_results=1)
-                    
+
             videos_list.extend(videos)
-            
-        # Sort by publication date (newest first)
+
         videos_list.sort(key=lambda x: x['publishedAt'], reverse=True)
         result[category] = videos_list
-    
-    return result
 
+    return result
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
@@ -192,104 +175,37 @@ async def get_styles():
 async def get_scripts():
     return FileResponse("scripts.js", media_type="application/javascript")
 
-@app.get("/api", response_class=JSONResponse)
-def api_info():
-    return {"message": "YouTube Video Dashboard API", "endpoints": ["/api/videos", "/api/refresh"]}
-
-
-@app.get("/api/videos", response_class=JSONResponse)
-def get_videos(days_back: int = 7, strict_filter: bool = True, fallback_days: Optional[int] = None):
-    """API endpoint to get videos organized by category."""
-    try:
-        result = fetch_all_videos(days_back, strict_filter, fallback_days)
-        return result
-    except Exception as e:
-        logger.error(f"Error fetching videos: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 @app.get("/api/refresh", response_class=JSONResponse)
 def refresh_videos(days_back: int = 7, strict_filter: bool = True, fallback_days: Optional[int] = None):
     """API endpoint to refresh and save videos to videos.json."""
     try:
         result = fetch_all_videos(days_back, strict_filter, fallback_days)
-        
-        # Save to JSON file for backward compatibility
         with open('videos.json', 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=4)
-        
         return {"message": "Videos refreshed and saved to videos.json", "count": sum(len(videos) for videos in result.values())}
     except Exception as e:
         logger.error(f"Error refreshing videos: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-# Serve the videos.json through API for compatibility
 @app.get("/videos.json", response_class=JSONResponse)
 def get_videos_json():
     try:
-        # Try to read the existing file first
-        try:
-            with open('videos.json', 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            # If file doesn't exist or is invalid, generate fresh data
-            result = fetch_all_videos()
-            with open('videos.json', 'w', encoding='utf-8') as f:
-                json.dump(result, f, indent=4)
-            return result
+        with open('videos.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
     except Exception as e:
         logger.error(f"Error serving videos.json: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@app.post("/api/categories/{category_name}")
-async def add_category(category_name: str):
-    try:
-        success = pref_manager.add_category(category_name)
-        if not success:
-            raise HTTPException(status_code=400, detail="Category already exists")
-        return {"message": f"Category {category_name} added successfully"}
-    except Exception as e:
-        logger.error(f"Error adding category: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/api/channels")
-async def add_channel(channel_name: str = Form(...), category_name: str = Form(...)):
-    try:
-        success = pref_manager.add_channel(channel_name, category_name)
-        if not success:
-            raise HTTPException(status_code=400, detail="Channel already exists")
-        return {"message": f"Channel {channel_name} added to {category_name} successfully"}
-    except Exception as e:
-        logger.error(f"Error adding channel: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.delete("/api/channels/{channel_name}")
-async def remove_channel(channel_name: str):
-    try:
-        success = pref_manager.remove_channel(channel_name)
-        if not success:
-            raise HTTPException(status_code=404, detail="Channel not found")
-        return {"message": f"Channel {channel_name} removed successfully"}
-    except Exception as e:
-        logger.error(f"Error removing channel: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-# Mount static files AFTER defining API routes
+# Mount static files
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 app.mount("/static", StaticFiles(directory="."), name="static")
 
-
 if __name__ == "__main__":
-    # Ensure videos.json exists when starting the server
     if not os.path.exists('videos.json'):
-        try:
-            result = fetch_all_videos()
-            with open('videos.json', 'w', encoding='utf-8') as f:
-                json.dump(result, f, indent=4)
-            logger.info("Created initial videos.json file")
-        except Exception as e:
-            logger.warning(f"Could not create initial videos.json: {e}")
-    
-    uvicorn.run("main:app", host="", port=8000, reload=True) 
+        with open('videos.json', 'w', encoding='utf-8') as f:
+            json.dump({}, f, indent=4)
+        logger.info("Created empty videos.json file")
+
+    uvicorn.run("main:app", host="", port=8000, reload=True)

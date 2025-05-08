@@ -38,9 +38,10 @@ class UserPreferenceManager:
         manager = cls()
         default_preferences = {
             "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
-            "Programming": ["realpython", "ThePrimeTimeagen", "MachineLearningStreetTalk"],
+            "Programming": ["realpython", "ThePrimeTimeagen"],
             "Philosophy": ["ThePartiallyExaminedLife"],
-            "Comedy": ["xQcOW", "standupots"]
+            "Comedy": [ "standupots"]
+            "Machine learning": ["MachineLearningStreetTalk"]
         }
         manager.import_from_json(default_preferences)
         return manager 
