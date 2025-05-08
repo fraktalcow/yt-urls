@@ -40,7 +40,7 @@ class UserPreferenceManager:
             "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
             "Programming": ["realpython", "ThePrimeTimeagen"],
             "Philosophy": ["ThePartiallyExaminedLife"],
-            "Comedy": [ "standupots"]
+            "Comedy": [ "standupots"],
             "Machine learning": ["MachineLearningStreetTalk"]
         }
         manager.import_from_json(default_preferences)

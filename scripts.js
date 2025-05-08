@@ -87,7 +87,7 @@ async function refreshVideos() {
             throw new Error('Failed to refresh videos');
         }
         const data = await response.json();
-        renderDashboard(data);
+        window.location.reload();
     } catch (error) {
         console.error('Error refreshing videos:', error);
         alert('Failed to refresh videos. Please try again.');

@@ -1,149 +1,120 @@
 {
-    "Comedy": [
-        {
-            "channel": "xQc",
-            "title": "xQc Plays MARATHON for the First Time",
-            "url": "https://www.youtube.com/watch?v=M68hWbABg-Q",
-            "publishedAt": "2025-04-24T11:50:22Z"
-        },
-        {
-            "channel": "xQc",
-            "title": "Idiots Driving Cars #27 | xQc Reacts",
-            "url": "https://www.youtube.com/watch?v=zw-yW6ACiJQ",
-            "publishedAt": "2025-04-22T20:30:12Z"
-        },
-        {
-            "channel": "xQc",
-            "title": "Mom Snaps on Cops While Holding Baby | xQc Reacts",
-            "url": "https://www.youtube.com/watch?v=qjUIa9D9EVk",
-            "publishedAt": "2025-04-22T17:13:36Z"
-        },
-        {
-            "channel": "xQc",
-            "title": "ACTUALLY GOOD TIK TOKS",
-            "url": "https://www.youtube.com/watch?v=12UwOB6e7Q4",
-            "publishedAt": "2025-04-22T13:22:17Z"
-        },
-        {
-            "channel": "xQc",
-            "title": "Grandma&#39;s 911 Call Leads to Horrific Discovery | xQc Reacts",
-            "url": "https://www.youtube.com/watch?v=tffHhNLm0Fc",
-            "publishedAt": "2025-04-21T19:30:08Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Jordan Jensen is a Grimey Ex | Stand-Up On The Spot",
-            "url": "https://www.youtube.com/watch?v=O5sEVxpR-ek",
-            "publishedAt": "2025-04-21T17:13:08Z"
-        }
-    ],
     "Mathematics": [
         {
             "channel": "3Blue1Brown",
-            "title": "How to measure nearby galaxies",
-            "url": "https://www.youtube.com/watch?v=aQwEJKWATlE",
-            "publishedAt": "2025-04-20T19:36:10Z"
+            "title": "Summer of Math Exposition #4 | Teachers, I&#39;d love to hear from you",
+            "url": "https://www.youtube.com/watch?v=3foYyPDp0Ho",
+            "publishedAt": "2025-05-05T15:00:08Z"
         },
         {
-            "channel": "Numberphile",
-            "title": "Cardioids in Coffee Cups - Numberphile",
-            "url": "https://www.youtube.com/watch?v=hKpa9ntjgeo",
-            "publishedAt": "2025-04-20T13:01:10Z"
-        }
-    ],
-    "Philosophy": [
-        {
-            "channel": "The Partially Examined Life",
-            "title": "Partially Examined Life#365: Scheler on Love (Part One)",
-            "url": "https://www.youtube.com/watch?v=JI-PWqXkx-k",
-            "publishedAt": "2025-04-21T10:47:09Z"
+            "channel": "3Blue1Brown",
+            "title": "Where my explanation of Grover\u2019s algorithm failed",
+            "url": "https://www.youtube.com/watch?v=Dlsa9EBKDGI",
+            "publishedAt": "2025-05-04T11:45:24Z"
         }
     ],
     "Programming": [
         {
             "channel": "ThePrimeTime",
-            "title": "Simple Made Easy - Prime Reacts",
-            "url": "https://www.youtube.com/watch?v=8eXiWkPSb50",
-            "publishedAt": "2025-04-24T14:09:36Z"
-        },
-        {
-            "channel": "Machine Learning Street Talk",
-            "title": "Noam Chomsky - Science Vs Engineering",
-            "url": "https://www.youtube.com/watch?v=Y_adWrLAW7A",
-            "publishedAt": "2025-04-23T19:12:45Z"
-        },
-        {
-            "channel": "ThePrimeTime",
-            "title": "Interviewing",
-            "url": "https://www.youtube.com/watch?v=EkP0kFfM1_s",
-            "publishedAt": "2025-04-23T17:46:14Z"
+            "title": "OpenAI Buys Windsurf",
+            "url": "https://www.youtube.com/watch?v=-FI4zp7jEso",
+            "publishedAt": "2025-05-08T20:20:12Z"
         },
         {
             "channel": "Real Python",
-            "title": "Why Media Literacy Is Key to Using AI Wisely",
-            "url": "https://www.youtube.com/watch?v=pJKn2jbzigo",
-            "publishedAt": "2025-04-23T17:01:04Z"
-        },
-        {
-            "channel": "Machine Learning Street Talk",
-            "title": "Don\u2019t use NNs for simulation (Johannes Brandstetter)",
-            "url": "https://www.youtube.com/watch?v=ty2JgxV5Wqk",
-            "publishedAt": "2025-04-23T15:11:11Z"
-        },
-        {
-            "channel": "Machine Learning Street Talk",
-            "title": "Build Specialist LLMs Like It\u2019s 2019",
-            "url": "https://www.youtube.com/watch?v=SP-kORMUZns",
-            "publishedAt": "2025-04-23T14:09:32Z"
+            "title": "Using the Python subprocess Module: Gettting Started &amp; Using subprocess to Run Python",
+            "url": "https://www.youtube.com/watch?v=_mO7m8lyC2g",
+            "publishedAt": "2025-05-08T17:00:44Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "Thanks Obama, Al Codes Better Than Most Developers",
-            "url": "https://www.youtube.com/watch?v=U76TSJ7ONzM",
-            "publishedAt": "2025-04-22T20:24:12Z"
+            "title": "\ud83d\udea8\ud83d\udea8 I AM UI PROGRAMMER - HEAR ME CSS \ud83d\udea8\ud83d\udea8",
+            "url": "https://www.youtube.com/watch?v=MH0FIKrMUM8",
+            "publishedAt": "2025-05-08T13:10:05Z"
+        },
+        {
+            "channel": "Real Python",
+            "title": "Forget Manual Virtual Envs -- This Is the Future!",
+            "url": "https://www.youtube.com/watch?v=dIGlJJUc2os",
+            "publishedAt": "2025-05-07T17:00:45Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "Checkmate",
-            "url": "https://www.youtube.com/watch?v=n8RhAK53tRM",
-            "publishedAt": "2025-04-22T19:33:44Z"
-        },
-        {
-            "channel": "Machine Learning Street Talk",
-            "title": "How we think about AI - Mazviita Chirimuuta",
-            "url": "https://www.youtube.com/watch?v=3fILA-B0W78",
-            "publishedAt": "2025-04-22T16:56:54Z"
+            "title": "FIVERR CEO Leaks His Own Email",
+            "url": "https://www.youtube.com/watch?v=wtf3eAdGYKU",
+            "publishedAt": "2025-05-07T16:43:06Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "Were Cooked",
-            "url": "https://www.youtube.com/watch?v=fVgib3LXeUc",
-            "publishedAt": "2025-04-21T21:49:34Z"
+            "title": "The Rule",
+            "url": "https://www.youtube.com/watch?v=emlDGTXuhts",
+            "publishedAt": "2025-05-06T18:42:10Z"
         },
         {
             "channel": "Real Python",
-            "title": "How Ruff Made Python Linting Blazingly Fast",
-            "url": "https://www.youtube.com/watch?v=pbCK50uXX1s",
-            "publishedAt": "2025-04-21T17:01:04Z"
+            "title": "Building a Code Image Generator With Python",
+            "url": "https://www.youtube.com/watch?v=4id2nXQtNn8",
+            "publishedAt": "2025-05-05T17:00:06Z"
         },
         {
-            "channel": "Machine Learning Street Talk",
-            "title": "Breaking the world up into useful parts (Dr. Jeff Beck)",
-            "url": "https://www.youtube.com/watch?v=eaW9fbE7kVM",
-            "publishedAt": "2025-04-19T11:05:48Z"
-        },
-        {
-            "channel": "Real Python",
-            "title": "Exploring DuckDB &amp; Comparing Python Expressions vs Statements | Real Python Podcast #247",
-            "url": "https://www.youtube.com/watch?v=uyq3SXXR1Zw",
-            "publishedAt": "2025-04-18T17:01:11Z"
-        },
-        {
-            "channel": "Real Python",
-            "title": "Creating a Python Dice Roll Application: Defining the Project &amp; Building the Text-Based Interface",
-            "url": "https://www.youtube.com/watch?v=d4ocDG5ih_s",
-            "publishedAt": "2025-04-17T17:00:48Z"
+            "channel": "ThePrimeTime",
+            "title": "The Sweating Problem",
+            "url": "https://www.youtube.com/watch?v=yorBZ2ZuxDM",
+            "publishedAt": "2025-05-02T20:36:45Z"
         }
     ],
-    "Machine learning": []
+    "Philosophy": [
+        {
+            "channel": "The Partially Examined Life",
+            "title": "Partially Examined Life #366: Edith Stein on Empathy (Part One)",
+            "url": "https://www.youtube.com/watch?v=ZZbiPWRbJlA",
+            "publishedAt": "2025-05-05T12:42:15Z"
+        },
+        {
+            "channel": "The Partially Examined Life",
+            "title": "Closereads: Edith Stein on Self (Part One)",
+            "url": "https://www.youtube.com/watch?v=_7OKwHgK-KY",
+            "publishedAt": "2025-05-04T12:54:15Z"
+        }
+    ],
+    "Comedy": [
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "Flea Market Find | Katherine Blanford #standupcomedy #KatherineBlanford #thrift #sade #fleamarket",
+            "url": "https://www.youtube.com/watch?v=65Xo6KsS1qI",
+            "publishedAt": "2025-05-08T17:00:07Z"
+        },
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "Ticklin&#39; | Dusty Slay #standupcomedy #DustySlay #tickle #tickling #sensoryplay",
+            "url": "https://www.youtube.com/watch?v=nDQaSkXoYWI",
+            "publishedAt": "2025-05-07T17:01:00Z"
+        },
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "Half-Circ*mcised | Jeff Ross #standupcomedy #JeffRoss #circumcision #roast",
+            "url": "https://www.youtube.com/watch?v=jGU6_io_25U",
+            "publishedAt": "2025-05-06T17:00:56Z"
+        },
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "Is ChatGPT Single?? | Katherine Blanford #standupcomedy #KatherineBlanford #chatgpt #single",
+            "url": "https://www.youtube.com/watch?v=N1Gfriu5pXs",
+            "publishedAt": "2025-05-05T17:00:34Z"
+        },
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "Algebruh | Shapel Lacey #standupcomedy #ShapelLacey #algebra #math",
+            "url": "https://www.youtube.com/watch?v=5JVtmpqY0CM",
+            "publishedAt": "2025-05-02T17:00:16Z"
+        }
+    ],
+    "Machine learning": [
+        {
+            "channel": "Machine Learning Street Talk",
+            "title": "Are We Just Machines? (Mazviita Chirimuuta)",
+            "url": "https://www.youtube.com/watch?v=nMJxzGr-1P4",
+            "publishedAt": "2025-05-04T08:13:51Z"
+        }
+    ]
 }

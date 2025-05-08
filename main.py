@@ -5,7 +5,6 @@ from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import requests
 from dotenv import load_dotenv
@@ -30,15 +29,6 @@ BASE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 # Create FastAPI app
 app = FastAPI(title="YouTube Video Dashboard API")
-
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Initialize user preferences manager
 pref_manager = UserPreferenceManager.initialize_with_defaults()
@@ -204,8 +194,12 @@ app.mount("/static", StaticFiles(directory="."), name="static")
 
 if __name__ == "__main__":
     if not os.path.exists('videos.json'):
-        with open('videos.json', 'w', encoding='utf-8') as f:
-            json.dump({}, f, indent=4)
-        logger.info("Created empty videos.json file")
-
-    uvicorn.run("main:app", host="", port=8000, reload=True)
+        try:
+            result = fetch_all_videos()
+            with open('videos.json', 'w', encoding='utf-8') as f:
+                json.dump(result, f, indent=4)
+            logger.info("Created initial videos.json file")
+        except Exception as e:
+            logger.warning(f"Could not create initial videos.json: {e}")
+    
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
