@@ -1,9 +1,12 @@
 from typing import List, Dict
 import json
+import os
 
 class UserPreferenceManager:
     def __init__(self):
         self.preferences: Dict[str, List[str]] = {}
+        self.preferences_file = "preference.json"
+        self.load_preferences()
     
     def add_category(self, category_name: str) -> bool:
         if category_name not in self.preferences:
@@ -32,16 +35,24 @@ class UserPreferenceManager:
             
     def import_from_json(self, json_data: Dict[str, List[str]]):
         self.preferences = json_data
-                
-    @classmethod
-    def initialize_with_defaults(cls) -> 'UserPreferenceManager':
-        manager = cls()
-        default_preferences = {
-            "Mathematics": ["3Blue1Brown", "Numberphile", "patrickjmt"],
-            "Programming": ["realpython", "ThePrimeTimeagen"],
-            "Philosophy": ["ThePartiallyExaminedLife"],
-            "Comedy": [ "standupots"],
-            "Machine learning": ["MachineLearningStreetTalk"]
-        }
-        manager.import_from_json(default_preferences)
-        return manager 
+    
+    def load_preferences(self):
+        try:
+            if os.path.exists(self.preferences_file):
+                with open(self.preferences_file, 'r') as f:
+                    self.preferences = json.load(f)
+            else:
+                # If file doesn't exist, create empty preferences
+                self.preferences = {}
+                self.save_preferences()
+        except Exception as e:
+            print(f"Error loading preferences: {e}")
+            self.preferences = {}
+            self.save_preferences()
+    
+    def save_preferences(self):
+        try:
+            with open(self.preferences_file, 'w') as f:
+                json.dump(self.preferences, f, indent=4)
+        except Exception as e:
+            print(f"Error saving preferences: {e}") 

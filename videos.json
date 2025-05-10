@@ -16,27 +16,21 @@
     "Programming": [
         {
             "channel": "ThePrimeTime",
-            "title": "OpenAI Buys Windsurf",
-            "url": "https://www.youtube.com/watch?v=-FI4zp7jEso",
-            "publishedAt": "2025-05-08T20:20:12Z"
-        },
-        {
-            "channel": "Real Python",
-            "title": "Using the Python subprocess Module: Gettting Started &amp; Using subprocess to Run Python",
-            "url": "https://www.youtube.com/watch?v=_mO7m8lyC2g",
-            "publishedAt": "2025-05-08T17:00:44Z"
+            "title": "AI Money Glitch",
+            "url": "https://www.youtube.com/watch?v=BInmliE_7yo",
+            "publishedAt": "2025-05-09T18:05:02Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "\ud83d\udea8\ud83d\udea8 I AM UI PROGRAMMER - HEAR ME CSS \ud83d\udea8\ud83d\udea8",
-            "url": "https://www.youtube.com/watch?v=MH0FIKrMUM8",
-            "publishedAt": "2025-05-08T13:10:05Z"
+            "title": "How To Become The BEST Engineer At Your Company",
+            "url": "https://www.youtube.com/watch?v=Qc_kEyLsXH0",
+            "publishedAt": "2025-05-09T16:20:42Z"
         },
         {
-            "channel": "Real Python",
-            "title": "Forget Manual Virtual Envs -- This Is the Future!",
-            "url": "https://www.youtube.com/watch?v=dIGlJJUc2os",
-            "publishedAt": "2025-05-07T17:00:45Z"
+            "channel": "ThePrimeTime",
+            "title": "OpenAI Buys Windsurf",
+            "url": "https://www.youtube.com/watch?v=-FI4zp7jEso",
+            "publishedAt": "2025-05-08T20:20:12Z"
         },
         {
             "channel": "ThePrimeTime",
@@ -49,18 +43,6 @@
             "title": "The Rule",
             "url": "https://www.youtube.com/watch?v=emlDGTXuhts",
             "publishedAt": "2025-05-06T18:42:10Z"
-        },
-        {
-            "channel": "Real Python",
-            "title": "Building a Code Image Generator With Python",
-            "url": "https://www.youtube.com/watch?v=4id2nXQtNn8",
-            "publishedAt": "2025-05-05T17:00:06Z"
-        },
-        {
-            "channel": "ThePrimeTime",
-            "title": "The Sweating Problem",
-            "url": "https://www.youtube.com/watch?v=yorBZ2ZuxDM",
-            "publishedAt": "2025-05-02T20:36:45Z"
         }
     ],
     "Philosophy": [
@@ -101,12 +83,6 @@
             "title": "Is ChatGPT Single?? | Katherine Blanford #standupcomedy #KatherineBlanford #chatgpt #single",
             "url": "https://www.youtube.com/watch?v=N1Gfriu5pXs",
             "publishedAt": "2025-05-05T17:00:34Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Algebruh | Shapel Lacey #standupcomedy #ShapelLacey #algebra #math",
-            "url": "https://www.youtube.com/watch?v=5JVtmpqY0CM",
-            "publishedAt": "2025-05-02T17:00:16Z"
         }
     ],
     "Machine learning": [
@@ -115,6 +91,38 @@
             "title": "Are We Just Machines? (Mazviita Chirimuuta)",
             "url": "https://www.youtube.com/watch?v=nMJxzGr-1P4",
             "publishedAt": "2025-05-04T08:13:51Z"
+        }
+    ],
+    "Music": [
+        {
+            "channel": "KEXP",
+            "title": "Molchat Doma Live on KEXP",
+            "url": "https://www.youtube.com/watch?v=hROkPO7V3uQ",
+            "publishedAt": "2025-05-09T17:16:50Z"
+        },
+        {
+            "channel": "KEXP",
+            "title": "Molchat Doma - Full Performance (Live on KEXP)",
+            "url": "https://www.youtube.com/watch?v=DHbn44-Bg4o",
+            "publishedAt": "2025-05-09T15:00:31Z"
+        },
+        {
+            "channel": "KEXP",
+            "title": "Molchat Doma - Belaya Polosa (Live on KEXP)",
+            "url": "https://www.youtube.com/watch?v=j5ZPUzySMgM",
+            "publishedAt": "2025-05-09T11:01:14Z"
+        },
+        {
+            "channel": "KEXP",
+            "title": "Molchat Doma - Ty Zhe Ne Znaesh Kto Ya (Live on KEXP)",
+            "url": "https://www.youtube.com/watch?v=efqSzfXaA5k",
+            "publishedAt": "2025-05-09T11:01:08Z"
+        },
+        {
+            "channel": "KEXP",
+            "title": "Molchat Doma - Sudno (Live on KEXP)",
+            "url": "https://www.youtube.com/watch?v=ETB1dqgqafE",
+            "publishedAt": "2025-05-09T11:00:22Z"
         }
     ]
 }

@@ -16,6 +16,7 @@
                 <p class="subtitle">Youtube video aggregator</p>
             </div>
             <div class="header-actions">
+                <button id="manageChannelsBtn" class="manage-channels-btn">Manage Channels</button>
                 <button id="refreshBtn" class="refresh-button">Refresh</button>
             </div>
         </header>
@@ -23,6 +24,27 @@
         <main id="categories-container" class="categories">
             <!-- Content will be loaded here -->
         </main>
+    </div>
+
+    <!-- Channel Management Modal -->
+    <div id="channelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Manage Channels</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="categories-manager">
+                    <div class="add-category">
+                        <input type="text" id="newCategoryInput" placeholder="New category name">
+                        <button id="addCategoryBtn">Add Category</button>
+                    </div>
+                    <div id="categoriesList" class="categories-list">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="scripts.js"></script>

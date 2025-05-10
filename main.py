@@ -31,7 +31,7 @@ BASE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search'
 app = FastAPI(title="YouTube Video Dashboard API")
 
 # Initialize user preferences manager
-pref_manager = UserPreferenceManager.initialize_with_defaults()
+pref_manager = UserPreferenceManager()
 
 def get_channels() -> Dict[str, List[str]]:
     return pref_manager.get_channels()
@@ -181,12 +181,62 @@ def refresh_videos(days_back: int = 7, strict_filter: bool = True, fallback_days
 def get_videos_json():
     try:
         with open('videos.json', 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+            response = JSONResponse(content=data)
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
     except Exception as e:
         logger.error(f"Error serving videos.json: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# API Endpoints
+@app.get("/api/categories")
+async def get_categories():
+    return pref_manager.get_channels()
+
+@app.post("/api/categories")
+async def add_category(category_data: dict):
+    category = category_data.get("category")
+    if not category:
+        raise HTTPException(status_code=400, detail="Category name is required")
+    if pref_manager.add_category(category):
+        pref_manager.save_preferences()
+        return {"message": "Category added successfully"}
+    raise HTTPException(status_code=400, detail="Category already exists")
+
+@app.delete("/api/categories/{category}")
+async def delete_category(category: str):
+    if category in pref_manager.preferences:
+        del pref_manager.preferences[category]
+        pref_manager.save_preferences()
+        return {"message": "Category deleted successfully"}
+    raise HTTPException(status_code=404, detail="Category not found")
+
+@app.post("/api/channels")
+async def add_channel(channel_data: dict):
+    channel = channel_data.get("channel")
+    category = channel_data.get("category")
+    if not channel or not category:
+        raise HTTPException(status_code=400, detail="Channel name and category are required")
+    if pref_manager.add_channel(channel, category):
+        pref_manager.save_preferences()
+        return {"message": "Channel added successfully"}
+    raise HTTPException(status_code=400, detail="Channel already exists in category")
+
+@app.delete("/api/channels/{channel}")
+async def remove_channel(channel: str, category_data: dict):
+    category = category_data.get("category")
+    if not category:
+        raise HTTPException(status_code=400, detail="Category is required")
+    if category in pref_manager.preferences and channel in pref_manager.preferences[category]:
+        pref_manager.preferences[category].remove(channel)
+        pref_manager.save_preferences()
+        return {"message": "Channel removed successfully"}
+    raise HTTPException(status_code=404, detail="Channel or category not found")
 
 # Mount static files
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
