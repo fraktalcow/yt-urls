@@ -76,7 +76,6 @@ async function loadVideos() {
         renderDashboard(data);
     } catch (error) {
         console.error('Error loading videos:', error);
-        alert('Failed to load videos. Please try again.');
     }
 }
 
@@ -91,7 +90,6 @@ async function refreshVideos() {
         window.location.reload();
     } catch (error) {
         console.error('Error refreshing videos:', error);
-        alert('Failed to refresh videos. Please try again.');
     }
 }
 
@@ -133,15 +131,48 @@ function renderCategoriesManager(categories) {
     container.innerHTML = categoriesHtml;
 }
 
+async function loadDurationSettings() {
+    try {
+        const response = await fetch('/api/settings/duration');
+        if (!response.ok) throw new Error('Failed to load duration settings');
+        const duration = await response.json();
+        document.getElementById('daysInput').value = duration.days;
+        document.getElementById('monthsInput').value = duration.months;
+    } catch (error) {
+        console.error('Error loading duration settings:', error);
+    }
+}
+
+function renderDurationSettings() {
+    const container = document.getElementById('durationSettings');
+    container.innerHTML = `
+        <div class="duration-settings">
+            <h3>Duration Settings</h3>
+            <div class="duration-inputs">
+                <div class="duration-input">
+                    <label for="daysInput">Days:</label>
+                    <input type="number" id="daysInput" min="0" value="7">
+                </div>
+                <div class="duration-input">
+                    <label for="monthsInput">Months:</label>
+                    <input type="number" id="monthsInput" min="0" value="0">
+                </div>
+            </div>
+            <button id="saveDurationBtn" class="save-duration-btn">Save Duration</button>
+        </div>
+    `;
+    loadDurationSettings();
+}
+
 async function loadCategories() {
     try {
         const response = await fetch('/api/categories');
         if (!response.ok) throw new Error('Failed to load categories');
-        const preferences = await response.json();
-        renderCategoriesManager(preferences);
+        const categories = await response.json();
+        renderCategoriesManager(categories);
+        renderDurationSettings();
     } catch (error) {
         console.error('Error loading categories:', error);
-        alert('Failed to load categories. Please try again.');
     }
 }
 
@@ -154,10 +185,8 @@ async function addCategory(categoryName) {
         });
         if (!response.ok) throw new Error('Failed to add category');
         await loadCategories();
-        // Just update the channel management UI, videos will be fetched on refresh
     } catch (error) {
         console.error('Error adding category:', error);
-        alert('Failed to add category. Please try again.');
     }
 }
 
@@ -168,10 +197,8 @@ async function deleteCategory(categoryName) {
         });
         if (!response.ok) throw new Error('Failed to delete category');
         await loadCategories();
-        // Just update the channel management UI, videos will be fetched on refresh
     } catch (error) {
         console.error('Error deleting category:', error);
-        alert('Failed to delete category. Please try again.');
     }
 }
 
@@ -184,10 +211,8 @@ async function addChannel(channelName, categoryName) {
         });
         if (!response.ok) throw new Error('Failed to add channel');
         await loadCategories();
-        // Just update the channel management UI, videos will be fetched on refresh
     } catch (error) {
         console.error('Error adding channel:', error);
-        alert('Failed to add channel. Please try again.');
     }
 }
 
@@ -200,10 +225,8 @@ async function removeChannel(channelName, categoryName) {
         });
         if (!response.ok) throw new Error('Failed to remove channel');
         await loadCategories();
-        // Just update the channel management UI, videos will be fetched on refresh
     } catch (error) {
         console.error('Error removing channel:', error);
-        alert('Failed to remove channel. Please try again.');
     }
 }
 
@@ -215,6 +238,24 @@ function showModal() {
 
 function hideModal() {
     document.getElementById('channelModal').classList.remove('active');
+}
+
+async function saveDurationSettings() {
+    const days = parseInt(document.getElementById('daysInput').value) || 7;
+    const months = parseInt(document.getElementById('monthsInput').value) || 0;
+    
+    try {
+        const response = await fetch('/api/settings/duration', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ days, months })
+        });
+        if (!response.ok) throw new Error('Failed to save duration settings');
+        console.log('Duration settings saved successfully');
+        loadVideos();
+    } catch (error) {
+        console.error('Error saving duration settings:', error);
+    }
 }
 
 // Event Listeners
@@ -266,6 +307,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.classList.contains('delete-category')) {
             const categoryName = e.target.dataset.category;
             deleteCategory(categoryName);
+        }
+    });
+
+    // Save duration settings
+    document.getElementById('durationSettings').addEventListener('click', (e) => {
+        if (e.target.id === 'saveDurationBtn') {
+            saveDurationSettings();
         }
     });
 });

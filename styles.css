@@ -523,6 +523,69 @@ header {
     color: var(--danger-color);
 }
 
+/* Duration Settings */
+.duration-settings {
+    background-color: var(--bg-color);
+    border-radius: 4px;
+    padding: 16px;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.duration-settings h3 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--text-color);
+}
+
+.duration-inputs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.duration-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.duration-input label {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+}
+
+.duration-input input {
+    width: 80px;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-family: var(--mono-font);
+}
+
+.duration-input input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.save-duration-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.save-duration-btn:hover {
+    background-color: var(--accent-hover);
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
     .container {

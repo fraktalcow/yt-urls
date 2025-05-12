@@ -112,9 +112,11 @@ def fetch_videos(channel_id: str, published_after: Optional[str] = None, max_res
 
     return []
 
-def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallback_limit: Optional[int] = None) -> Dict[str, List[Dict[str, str]]]:
+def fetch_all_videos(days_back: int = None, strict_date_filter: bool = True, fallback_limit: Optional[int] = None) -> Dict[str, List[Dict[str, str]]]:
     """Fetch all videos grouped by category."""
-    published_after = (datetime.now(timezone.utc) - timedelta(days=days_back)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    duration = pref_manager.get_duration()
+    total_days = duration["days"] + (duration["months"] * 30)
+    published_after = (datetime.now(timezone.utc) - timedelta(days=total_days)).strftime("%Y-%m-%dT%H:%M:%SZ")
     fallback_date = None
     if fallback_limit is not None:
         fallback_date = (datetime.now(timezone.utc) - timedelta(days=fallback_limit)).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -136,10 +138,10 @@ def fetch_all_videos(days_back: int = 7, strict_date_filter: bool = True, fallba
 
             if not videos and not strict_date_filter:
                 if fallback_date:
-                    logger.info(f"No videos in last {days_back} days for '{channel_name}'. Trying extended range of {fallback_limit} days.")
+                    logger.info(f"No videos in last {total_days} days for '{channel_name}'. Trying extended range of {fallback_limit} days.")
                     videos = fetch_videos(channel_id, fallback_date, max_results=1)
                 else:
-                    logger.info(f"No videos in last {days_back} days for '{channel_name}'. Fetching latest video regardless of date.")
+                    logger.info(f"No videos in last {total_days} days for '{channel_name}'. Fetching latest video regardless of date.")
                     videos = fetch_videos(channel_id, max_results=1)
 
             videos_list.extend(videos)
@@ -210,8 +212,8 @@ async def add_category(category_data: dict):
 
 @app.delete("/api/categories/{category}")
 async def delete_category(category: str):
-    if category in pref_manager.preferences:
-        del pref_manager.preferences[category]
+    if category in pref_manager.preferences["categories"]:
+        del pref_manager.preferences["categories"][category]
         pref_manager.save_preferences()
         return {"message": "Category deleted successfully"}
     raise HTTPException(status_code=404, detail="Category not found")
@@ -232,11 +234,22 @@ async def remove_channel(channel: str, category_data: dict):
     category = category_data.get("category")
     if not category:
         raise HTTPException(status_code=400, detail="Category is required")
-    if category in pref_manager.preferences and channel in pref_manager.preferences[category]:
-        pref_manager.preferences[category].remove(channel)
+    if category in pref_manager.preferences["categories"] and channel in pref_manager.preferences["categories"][category]:
+        pref_manager.preferences["categories"][category].remove(channel)
         pref_manager.save_preferences()
         return {"message": "Channel removed successfully"}
     raise HTTPException(status_code=404, detail="Channel or category not found")
+
+@app.get("/api/settings/duration")
+async def get_duration():
+    return pref_manager.get_duration()
+
+@app.post("/api/settings/duration")
+async def set_duration(duration_data: dict):
+    days = duration_data.get("days", 7)
+    months = duration_data.get("months", 0)
+    pref_manager.set_duration(days, months)
+    return {"message": "Duration settings updated successfully"}
 
 # Mount static files
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")

@@ -1,20 +1,25 @@
 {
-    "Mathematics": [
-        "3Blue1Brown"
-    ],
-    "Programming": [
-        "ThePrimeTimeagen"
-    ],
-    "Philosophy": [
-        "ThePartiallyExaminedLife"
-    ],
-    "Comedy": [
-        "standupots"
-    ],
-    "Machine learning": [
-        "MachineLearningStreetTalk"
-    ],
-    "Music": [
-        "kexp"
-    ]
+    "categories": {
+        "Mathematics": [
+            "3Blue1Brown"
+        ],
+        "Programming": [
+            "ThePrimeTimeagen"
+        ],
+        "Philosophy": [
+            "ThePartiallyExaminedLife"
+        ],
+        "Comedy": [
+            "standupots"
+        ],
+        "Machine learning": [
+            "MachineLearningStreetTalk"
+        ]
+    },
+    "settings": {
+        "duration": {
+            "days": 7,
+            "months": 0
+        }
+    }
 }
