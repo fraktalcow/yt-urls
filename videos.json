@@ -1,18 +1,5 @@
 {
-    "Mathematics": [
-        {
-            "channel": "3Blue1Brown",
-            "title": "Summer of Math Exposition #4 | Teachers, I&#39;d love to hear from you",
-            "url": "https://www.youtube.com/watch?v=3foYyPDp0Ho",
-            "publishedAt": "2025-05-05T15:00:08Z"
-        },
-        {
-            "channel": "3Blue1Brown",
-            "title": "Where my explanation of Grover\u2019s algorithm failed",
-            "url": "https://www.youtube.com/watch?v=Dlsa9EBKDGI",
-            "publishedAt": "2025-05-04T11:45:24Z"
-        }
-    ],
+    "Mathematics": [],
     "Programming": [
         {
             "channel": "ThePrimeTime",
@@ -48,18 +35,24 @@
     "Philosophy": [
         {
             "channel": "The Partially Examined Life",
-            "title": "Partially Examined Life #366: Edith Stein on Empathy (Part One)",
-            "url": "https://www.youtube.com/watch?v=ZZbiPWRbJlA",
-            "publishedAt": "2025-05-05T12:42:15Z"
+            "title": "Philosophy vs  Improv w/ Greg McBrayer (Ep. 92)",
+            "url": "https://www.youtube.com/watch?v=-32itLnrZTU",
+            "publishedAt": "2025-05-12T12:00:36Z"
         },
         {
             "channel": "The Partially Examined Life",
-            "title": "Closereads: Edith Stein on Self (Part One)",
-            "url": "https://www.youtube.com/watch?v=_7OKwHgK-KY",
-            "publishedAt": "2025-05-04T12:54:15Z"
+            "title": "Partially Examined Life #366: Edith Stein on Empathy (Part Two)",
+            "url": "https://www.youtube.com/watch?v=9mSDF9tr_nU",
+            "publishedAt": "2025-05-12T11:18:40Z"
         }
     ],
     "Comedy": [
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "SOTS Austin: John Goblikon, Orny Adams, Gianmarco Soresi, Austin Nasso Liza Treyger &amp; Watkins| Ep 73",
+            "url": "https://www.youtube.com/watch?v=z0FbOHLGN4g",
+            "publishedAt": "2025-05-11T14:23:21Z"
+        },
         {
             "channel": "Stand-Up On The Spot",
             "title": "Flea Market Find | Katherine Blanford #standupcomedy #KatherineBlanford #thrift #sade #fleamarket",
@@ -77,52 +70,7 @@
             "title": "Half-Circ*mcised | Jeff Ross #standupcomedy #JeffRoss #circumcision #roast",
             "url": "https://www.youtube.com/watch?v=jGU6_io_25U",
             "publishedAt": "2025-05-06T17:00:56Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Is ChatGPT Single?? | Katherine Blanford #standupcomedy #KatherineBlanford #chatgpt #single",
-            "url": "https://www.youtube.com/watch?v=N1Gfriu5pXs",
-            "publishedAt": "2025-05-05T17:00:34Z"
         }
     ],
-    "Machine learning": [
-        {
-            "channel": "Machine Learning Street Talk",
-            "title": "Are We Just Machines? (Mazviita Chirimuuta)",
-            "url": "https://www.youtube.com/watch?v=nMJxzGr-1P4",
-            "publishedAt": "2025-05-04T08:13:51Z"
-        }
-    ],
-    "Music": [
-        {
-            "channel": "KEXP",
-            "title": "Molchat Doma Live on KEXP",
-            "url": "https://www.youtube.com/watch?v=hROkPO7V3uQ",
-            "publishedAt": "2025-05-09T17:16:50Z"
-        },
-        {
-            "channel": "KEXP",
-            "title": "Molchat Doma - Full Performance (Live on KEXP)",
-            "url": "https://www.youtube.com/watch?v=DHbn44-Bg4o",
-            "publishedAt": "2025-05-09T15:00:31Z"
-        },
-        {
-            "channel": "KEXP",
-            "title": "Molchat Doma - Belaya Polosa (Live on KEXP)",
-            "url": "https://www.youtube.com/watch?v=j5ZPUzySMgM",
-            "publishedAt": "2025-05-09T11:01:14Z"
-        },
-        {
-            "channel": "KEXP",
-            "title": "Molchat Doma - Ty Zhe Ne Znaesh Kto Ya (Live on KEXP)",
-            "url": "https://www.youtube.com/watch?v=efqSzfXaA5k",
-            "publishedAt": "2025-05-09T11:01:08Z"
-        },
-        {
-            "channel": "KEXP",
-            "title": "Molchat Doma - Sudno (Live on KEXP)",
-            "url": "https://www.youtube.com/watch?v=ETB1dqgqafE",
-            "publishedAt": "2025-05-09T11:00:22Z"
-        }
-    ]
+    "Machine learning": []
 }
