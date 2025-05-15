@@ -3,36 +3,42 @@
     "Programming": [
         {
             "channel": "ThePrimeTime",
-            "title": "AI Money Glitch",
-            "url": "https://www.youtube.com/watch?v=BInmliE_7yo",
-            "publishedAt": "2025-05-09T18:05:02Z"
+            "title": "sorry",
+            "url": "https://www.youtube.com/watch?v=5Fp_GmkiwD4",
+            "publishedAt": "2025-05-15T16:35:13Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "How To Become The BEST Engineer At Your Company",
-            "url": "https://www.youtube.com/watch?v=Qc_kEyLsXH0",
-            "publishedAt": "2025-05-09T16:20:42Z"
+            "title": "The Meta",
+            "url": "https://www.youtube.com/watch?v=R9WzjnLcn-k",
+            "publishedAt": "2025-05-14T19:28:08Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "OpenAI Buys Windsurf",
-            "url": "https://www.youtube.com/watch?v=-FI4zp7jEso",
-            "publishedAt": "2025-05-08T20:20:12Z"
+            "title": "JUST USE HTML",
+            "url": "https://www.youtube.com/watch?v=jnY61ywnBHM",
+            "publishedAt": "2025-05-14T18:10:08Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "FIVERR CEO Leaks His Own Email",
-            "url": "https://www.youtube.com/watch?v=wtf3eAdGYKU",
-            "publishedAt": "2025-05-07T16:43:06Z"
+            "title": "The Lazies",
+            "url": "https://www.youtube.com/watch?v=wHyD_l86f1E",
+            "publishedAt": "2025-05-13T23:35:18Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "The Rule",
-            "url": "https://www.youtube.com/watch?v=emlDGTXuhts",
-            "publishedAt": "2025-05-06T18:42:10Z"
+            "title": "How BAD Is Test Driven Development? - The Standup #6",
+            "url": "https://www.youtube.com/watch?v=kJWsFWY25GA",
+            "publishedAt": "2025-05-13T11:01:11Z"
         }
     ],
     "Philosophy": [
+        {
+            "channel": "The Partially Examined Life",
+            "title": "Pretty Much Pop #196: Our &quot;Sinners&quot; Shindig",
+            "url": "https://www.youtube.com/watch?v=Qoy2jESLR0g",
+            "publishedAt": "2025-05-14T18:20:09Z"
+        },
         {
             "channel": "The Partially Examined Life",
             "title": "Philosophy vs  Improv w/ Greg McBrayer (Ep. 92)",
@@ -49,28 +55,30 @@
     "Comedy": [
         {
             "channel": "Stand-Up On The Spot",
+            "title": "RFK White Noise | Austin Nasso #standupcomedy #AustinNasso #RFKjr #impressions",
+            "url": "https://www.youtube.com/watch?v=Hx_rRyZM9H8",
+            "publishedAt": "2025-05-15T17:00:22Z"
+        },
+        {
+            "channel": "Stand-Up On The Spot",
+            "title": "Cute Goblin | John Goblikon #standupcomedy #JohnGoblikon #cute #goblin #dating",
+            "url": "https://www.youtube.com/watch?v=ePaamQW1wvo",
+            "publishedAt": "2025-05-14T18:00:39Z"
+        },
+        {
+            "channel": "Stand-Up On The Spot",
             "title": "SOTS Austin: John Goblikon, Orny Adams, Gianmarco Soresi, Austin Nasso Liza Treyger &amp; Watkins| Ep 73",
             "url": "https://www.youtube.com/watch?v=z0FbOHLGN4g",
-            "publishedAt": "2025-05-11T14:23:21Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Flea Market Find | Katherine Blanford #standupcomedy #KatherineBlanford #thrift #sade #fleamarket",
-            "url": "https://www.youtube.com/watch?v=65Xo6KsS1qI",
-            "publishedAt": "2025-05-08T17:00:07Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Ticklin&#39; | Dusty Slay #standupcomedy #DustySlay #tickle #tickling #sensoryplay",
-            "url": "https://www.youtube.com/watch?v=nDQaSkXoYWI",
-            "publishedAt": "2025-05-07T17:01:00Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Half-Circ*mcised | Jeff Ross #standupcomedy #JeffRoss #circumcision #roast",
-            "url": "https://www.youtube.com/watch?v=jGU6_io_25U",
-            "publishedAt": "2025-05-06T17:00:56Z"
+            "publishedAt": "2025-05-12T23:00:06Z"
         }
     ],
-    "Machine learning": []
+    "Machine learning": [
+        {
+            "channel": "Machine Learning Street Talk",
+            "title": "Wild breakthrough on Math after 56 years... [Exclusive]",
+            "url": "https://www.youtube.com/watch?v=vC9nAosXrJw",
+            "publishedAt": "2025-05-14T18:33:20Z"
+        }
+    ],
+    "Spirituality": []
 }

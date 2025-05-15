@@ -195,10 +195,14 @@ async function deleteCategory(categoryName) {
         const response = await fetch(`/api/categories/${encodeURIComponent(categoryName)}`, {
             method: 'DELETE'
         });
-        if (!response.ok) throw new Error('Failed to delete category');
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.detail || 'Failed to delete category');
+        }
         await loadCategories();
     } catch (error) {
         console.error('Error deleting category:', error);
+        alert(error.message);
     }
 }
 
@@ -223,10 +227,14 @@ async function removeChannel(channelName, categoryName) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ category: categoryName })
         });
-        if (!response.ok) throw new Error('Failed to remove channel');
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.detail || 'Failed to remove channel');
+        }
         await loadCategories();
     } catch (error) {
         console.error('Error removing channel:', error);
+        alert(error.message);
     }
 }
 

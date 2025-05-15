@@ -172,6 +172,10 @@ def refresh_videos(days_back: int = 7, strict_filter: bool = True, fallback_days
     """API endpoint to refresh and save videos to videos.json."""
     try:
         result = fetch_all_videos(days_back, strict_filter, fallback_days)
+        if not result or all(len(videos) == 0 for videos in result.values()):
+            logger.warning("No videos found for any category")
+            return {"message": "No videos found. Check your channel names or API key.", "count": 0}
+            
         with open('videos.json', 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=4)
         return {"message": "Videos refreshed and saved to videos.json", "count": sum(len(videos) for videos in result.values())}
@@ -265,4 +269,4 @@ if __name__ == "__main__":
         except Exception as e:
             logger.warning(f"Could not create initial videos.json: {e}")
     
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=2000, reload=True)
