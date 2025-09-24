@@ -1,83 +1,78 @@
 {
-    "Mathematics": [],
+    "Mathematics": [
+        {
+            "channel": "3Blue1Brown",
+            "title": "What was Euclid really doing? | Guest video by \u2068@bensyversen",
+            "url": "https://www.youtube.com/watch?v=M-MgQC6z3VU",
+            "publishedAt": "2025-09-18T14:13:05Z"
+        }
+    ],
     "Programming": [
         {
             "channel": "ThePrimeTime",
-            "title": "sorry",
-            "url": "https://www.youtube.com/watch?v=5Fp_GmkiwD4",
-            "publishedAt": "2025-05-15T16:35:13Z"
+            "title": "Day 1 - VIBE CODING A GAME IN 7 DAYS",
+            "url": "https://www.youtube.com/watch?v=5Z2oPUyDANI",
+            "publishedAt": "2025-09-23T19:04:07Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "The Meta",
-            "url": "https://www.youtube.com/watch?v=R9WzjnLcn-k",
-            "publishedAt": "2025-05-14T19:28:08Z"
+            "title": "\ud83d\udea8\ud83d\udea8 GAME CHALLENGE @PointCrow  vs @DougDoug  vs @MollyRocket  CREATOR (Cursor -- #ad)\ud83d\udea8\ud83d\udea8",
+            "url": "https://www.youtube.com/watch?v=6V_NrgpPU_c",
+            "publishedAt": "2025-09-22T21:24:22Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "JUST USE HTML",
-            "url": "https://www.youtube.com/watch?v=jnY61ywnBHM",
-            "publishedAt": "2025-05-14T18:10:08Z"
+            "title": "Day ZERO - VIBE CODING A GAME IN 7 DAYS",
+            "url": "https://www.youtube.com/watch?v=LkAj5DcrgsA",
+            "publishedAt": "2025-09-22T17:22:01Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "The Lazies",
-            "url": "https://www.youtube.com/watch?v=wHyD_l86f1E",
-            "publishedAt": "2025-05-13T23:35:18Z"
+            "title": "Claude got dumber",
+            "url": "https://www.youtube.com/watch?v=lSBkMKnsieo",
+            "publishedAt": "2025-09-21T15:01:29Z"
         },
         {
             "channel": "ThePrimeTime",
-            "title": "How BAD Is Test Driven Development? - The Standup #6",
-            "url": "https://www.youtube.com/watch?v=kJWsFWY25GA",
-            "publishedAt": "2025-05-13T11:01:11Z"
+            "title": "Slack is evil",
+            "url": "https://www.youtube.com/watch?v=SkQsOReCjRU",
+            "publishedAt": "2025-09-20T12:39:15Z"
         }
     ],
     "Philosophy": [
         {
             "channel": "The Partially Examined Life",
-            "title": "Pretty Much Pop #196: Our &quot;Sinners&quot; Shindig",
-            "url": "https://www.youtube.com/watch?v=Qoy2jESLR0g",
-            "publishedAt": "2025-05-14T18:20:09Z"
+            "title": "Partially Examined Life #376: Plato&#39;s &quot;Laws&quot; (Part One)",
+            "url": "https://www.youtube.com/watch?v=xN9rIVq1I5I",
+            "publishedAt": "2025-09-22T10:54:49Z"
         },
         {
             "channel": "The Partially Examined Life",
-            "title": "Philosophy vs  Improv w/ Greg McBrayer (Ep. 92)",
-            "url": "https://www.youtube.com/watch?v=-32itLnrZTU",
-            "publishedAt": "2025-05-12T12:00:36Z"
+            "title": "Closereads: Horkheimer and Adorno on Enlightenment (Part One)",
+            "url": "https://www.youtube.com/watch?v=qi576sj8kSc",
+            "publishedAt": "2025-09-18T13:18:33Z"
         },
         {
             "channel": "The Partially Examined Life",
-            "title": "Partially Examined Life #366: Edith Stein on Empathy (Part Two)",
-            "url": "https://www.youtube.com/watch?v=9mSDF9tr_nU",
-            "publishedAt": "2025-05-12T11:18:40Z"
+            "title": "Philosophy vs. Improv S5 Premiere w/ New Co-Host Mary Hynes",
+            "url": "https://www.youtube.com/watch?v=Q64Mi7xF_CA",
+            "publishedAt": "2025-09-18T13:11:01Z"
         }
     ],
     "Comedy": [
         {
             "channel": "Stand-Up On The Spot",
-            "title": "RFK White Noise | Austin Nasso #standupcomedy #AustinNasso #RFKjr #impressions",
-            "url": "https://www.youtube.com/watch?v=Hx_rRyZM9H8",
-            "publishedAt": "2025-05-15T17:00:22Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "Cute Goblin | John Goblikon #standupcomedy #JohnGoblikon #cute #goblin #dating",
-            "url": "https://www.youtube.com/watch?v=ePaamQW1wvo",
-            "publishedAt": "2025-05-14T18:00:39Z"
-        },
-        {
-            "channel": "Stand-Up On The Spot",
-            "title": "SOTS Austin: John Goblikon, Orny Adams, Gianmarco Soresi, Austin Nasso Liza Treyger &amp; Watkins| Ep 73",
-            "url": "https://www.youtube.com/watch?v=z0FbOHLGN4g",
-            "publishedAt": "2025-05-12T23:00:06Z"
+            "title": "Curly Hair | Stand Up On The Spot With Mark Gagnon",
+            "url": "https://www.youtube.com/watch?v=pcTr2ZRi64Q",
+            "publishedAt": "2025-09-23T20:00:50Z"
         }
     ],
     "Machine learning": [
         {
             "channel": "Machine Learning Street Talk",
-            "title": "Wild breakthrough on Math after 56 years... [Exclusive]",
-            "url": "https://www.youtube.com/watch?v=vC9nAosXrJw",
-            "publishedAt": "2025-05-14T18:33:20Z"
+            "title": "The Real Reason Huge AI Models Actually Work",
+            "url": "https://www.youtube.com/watch?v=M-jTeBCEGHc",
+            "publishedAt": "2025-09-19T16:01:15Z"
         }
     ],
     "Spirituality": []
